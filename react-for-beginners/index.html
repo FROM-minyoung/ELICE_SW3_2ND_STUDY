@@ -9,30 +9,14 @@
 
   <script type="text/babel">
     const root = document.getElementById("root");
-    // JSX 버전 (훨씬 간단) - 이대로 바로 실행하면 에러가 뜬다.. jsx를 변환해주어야 함(babel이용)
-    const Title = () => {
-      return (
-        <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
-          hello im a span
-        </h3>
-      );
-    };
-
-    const Button = () => {
-      return (
-        <button
-          style={{ backgroundColor: "red" }}
-          onClick={() => console.log("im clicked")}
-        >
-          Click me
-        </button>
-      );
-    };
-
+    let counter = 0;
+    function countUp() {
+      counter += 1;
+    }
     const Container = () => (
       <div>
-        <Title />
-        <Button />
+        <h3>Total clicks: {counter}</h3>
+        <button onClick={countUp}>Click me</button>
       </div>
     );
     ReactDOM.render(<Container />, root);
