@@ -3,12 +3,13 @@
   <body>
     <div id="root"></div>
   </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    function Btn({ berry, onClick }) {
+    function Btn({ berry, onClick, fontSize }) {
       return (
         <button
           onClick={onClick}
@@ -18,25 +19,29 @@
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize,
           }}
         >
           {berry}
         </button>
       );
     }
-    const MemorizedBtn = React.memo(Btn);
+    /* 여러개의 prop들이 있을 경우에는 프롭들의 값들을 헷갈려서 잘못 입력할 수 있음
+    그럴 때 프롭들의 타입을 미리 정해둘 수 있는 propTypes 기능이 있다! 위에 스크립트로 프롭타입 주소 적고
+    컴포넌트명.propTypes ={프롭의 타입이 뭐고, 어떤 모양이어야 하는지 설명가능하다}
+    propTypes를 이용하면 적어도 타입검증은 가능해서,, 다르게 입력하더라도 콘솔창에서 경고라도 확인할 수 있음*/
+    Btn.propTypes = {
+      berry: PropTypes.string,
+      fontSize: PropTypes.number,
+    };
 
     const App = () => {
       const [value, setValue] = React.useState("Save Changes");
       const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <MemorizedBtn berry={value} onClick={changeValue} />
-          {/* 버튼을 클릭했을 때, 위 버튼은 state로 인해 berry 가 변경됐기 때문에, 얘만 리렌더링 됨!
-            (변경된 prop이 있는 컴포넌트만 리렌더링)
-            만약 모두 리렌더링 된다면, 내 애플리케이션이 느려지는 원인이 될 수 있음. 
-            그래서 변경된 애들만 빠르게 리렌더링 될 수 있도록 하는 기능. React.memo()*/}
-          <MemorizedBtn berry="Continue" />
+          <Btn berry={value} onClick={changeValue} fontSize={18} />
+          <Btn berry="Continue" />
         </div>
       );
     };
