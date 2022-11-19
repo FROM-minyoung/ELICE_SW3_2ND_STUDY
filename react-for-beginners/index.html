@@ -15,21 +15,39 @@
       const onChange = (event) => {
         setMinutes(event.target.value);
       };
+      const reset = () => {
+        setMinutes(0);
+      };
       return (
         <div>
           <h1>Super Converter</h1>
           {/* htmlFor은 라벨(label)과 결합될 요소를 명시(해당 element의 id값을 많이 적음)*/}
-          <label htmlFor="minutes">Minutes</label>
-          <input
-            value={minutes}
-            id="minutes"
-            type="number"
-            placeholder="Minutes"
-            onChange={onChange}
-          />
-          <h4>you want to convert {minutes}</h4>
-          <label htmlFor="hours">Hours</label>
-          <input id="hours" type="number" placeholder="Hours" />
+          <div>
+            {" "}
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              value={minutes}
+              id="minutes"
+              type="number"
+              placeholder="Minutes"
+              onChange={onChange}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="hours">Hours</label>
+            {/* Hours input은 onChange 이벤트를 걸지 않았기 때문에 input value로 고정된다
+            (변경 불가능) */}
+            {/* disabled props는 입력 못하게 막음 !!! */}
+            <input
+              value={Math.round(minutes / 60)}
+              id="hours"
+              type="number"
+              placeholder="Hours"
+              disabled
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
         </div>
       );
     };
