@@ -13,7 +13,7 @@
     const App = () => {
       const [data, setData] = React.useState(0);
       const handleClick = () => {
-        setData(data + 1);
+        setData((current) => current + 1);
       };
       return (
         <div>
