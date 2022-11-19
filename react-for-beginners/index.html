@@ -11,12 +11,18 @@
     const root = document.getElementById("root");
 
     const App = () => {
-      const [minutes, setMinutes] = React.useState();
+      const [amount, setAmount] = React.useState();
+      const [flip, setFlip] = React.useState(false);
+
       const onChange = (event) => {
-        setMinutes(event.target.value);
+        setAmount(event.target.value);
       };
       const reset = () => {
-        setMinutes(0);
+        setAmount(0);
+      };
+      const onFlip = () => {
+        reset();
+        setFlip((current) => !current);
       };
       return (
         <div>
@@ -26,28 +32,29 @@
             {" "}
             <label htmlFor="minutes">Minutes</label>
             <input
-              value={minutes}
+              value={flip ? amount * 60 : amount}
               id="minutes"
               type="number"
               placeholder="Minutes"
               onChange={onChange}
+              disabled={flip}
             />
           </div>
 
           <div>
             <label htmlFor="hours">Hours</label>
-            {/* Hours input은 onChange 이벤트를 걸지 않았기 때문에 input value로 고정된다
-            (변경 불가능) */}
             {/* disabled props는 입력 못하게 막음 !!! */}
             <input
-              value={Math.round(minutes / 60)}
+              value={flip ? amount : Math.round(amount / 60)}
               id="hours"
               type="number"
               placeholder="Hours"
-              disabled
+              onChange={onChange}
+              disabled={!flip}
             />
           </div>
           <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
         </div>
       );
     };
