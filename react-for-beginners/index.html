@@ -8,31 +8,35 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
-    function Btn({ berry, big }) {
+    function Btn({ berry, onClick }) {
       return (
         <button
+          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
-            fontSize: big ? 18 : 16,
           }}
         >
-          {/* ㄴ 이런식으로 prop 기반으로 스타일 안에서 if else 사용가능 와우 */}
           {berry}
         </button>
       );
     }
-    function ConfirmBtn() {
-      return <button>Confirm</button>;
-    }
+    const MemorizedBtn = React.memo(Btn);
+
     const App = () => {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <Btn berry="Save Changes" big={true} /> {/* <--- 함수형 컴포넌트 */}
-          <Btn berry="Continue" />
+          <MemorizedBtn berry={value} onClick={changeValue} />
+          {/* 버튼을 클릭했을 때, 위 버튼은 state로 인해 berry 가 변경됐기 때문에, 얘만 리렌더링 됨!
+            (변경된 prop이 있는 컴포넌트만 리렌더링)
+            만약 모두 리렌더링 된다면, 내 애플리케이션이 느려지는 원인이 될 수 있음. 
+            그래서 변경된 애들만 빠르게 리렌더링 될 수 있도록 하는 기능. React.memo()*/}
+          <MemorizedBtn berry="Continue" />
         </div>
       );
     };
