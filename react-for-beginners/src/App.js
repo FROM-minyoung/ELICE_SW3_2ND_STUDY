@@ -1,68 +1,41 @@
 import { useState, useEffect } from "react";
 
-function App() {
-  const [counter, setCounter] = useState(0);
-  const [keyword, setKeyword] = useState("");
-
-  const onClick = () => setCounter((current) => current + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-
-  /*
-  누군가가 글자를 타이핑 할 때마다 api를 새로 호출한다면,,, 완전 비효율적!
-  그럴 때 useEffect를 사용해서 api를 한번만 호출할 수 있지롱 
-  해당 키워드가 변할때마다 api를 호출하고 싶은 것... 
-  그럴 때 deps 자리에 state를 넣어주면 돼!
-  
-  즉 해당 state가 변할 때마다 useEffect 콜백함수 실행시켜줌 !@!@!@
-
-  * deps 자리에 빈 배열 들어갔을 때 => 한 번만 실행해줌.
-  왜? 리액트가 아무것도 지켜보지 않거든. [] 빈 배열이잖아!
-  useEffect(() => {
-    console.log("CALL THE API...");
-  }, []);
-
-  * deps 자리에 state가 들어갔을 때 => state가 변경될 때마다 코드를 실행해줌.
-  state가 변할 때 코드를 실행할 것이라고 react.js에게 알려주는 것!
-  keyword를 계속 지켜보다가 엇 얘 변했어! 하고 변할때마다 실행하는거지~!!~~!~! 
-
-  useEffect(() => {
-    console.log("SEARCH FOR", keyword);
-  }, [keyword]);
+function Hello() {
+  /* create 될 때는 return 전 함수, destroyed 될 때는 return 후 함수! 함수다 함수가 와야해! 
 
     useEffect(() => {
-    // 그냥 두면 페이지 로드시에도 검색되니까 keyword가 빈칸이 아닐때만 검색하게 하자.
-    if (keyword !== "" && keyword.length > 5) {
-      console.log("SEARCH FOR", keyword);
-    }
-  }, [keyword]);
-
-  */
-  useEffect(() => {
-    console.log("I run only once.");
+    console.log("create :) ");
+    return () => console.log("destroyed X(");
   }, []);
 
-  useEffect(() => {
-    console.log("keyword 바뀔 때만 나온다.");
-  }, [keyword]);
+  */
 
-  useEffect(() => {
-    console.log("counter 바뀔 때만 나온다. ");
-  }, [counter]);
+  // 이런식으로 익명함수 말고 미리 만들어둔 함수를 적을 때는
+  // destroyed 될 때 그 함수 안에 return된 값이 나타난다
 
-  useEffect(() => {
-    console.log("둘 중에 하나만 바뀌어도 나온다");
-  }, [keyword, counter]);
+  function byFn() {
+    console.log("bye :)");
+  }
+  function hiFn() {
+    console.log("hi :)");
+    return byFn; // destroyed 될 때 나타날 함수
+  }
+
+  useEffect(hiFn, []);
+
+  return <h1>Hello</h1>;
+}
+
+function App() {
+  /* cleanup */
+  const [showing, setShowing] = useState(false);
+
+  const onClick = () => setShowing((current) => !current);
 
   return (
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here..."
-      />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>Click</button>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick}>{showing ? "HIDE" : "SHOW"}</button>
     </div>
   );
 }
