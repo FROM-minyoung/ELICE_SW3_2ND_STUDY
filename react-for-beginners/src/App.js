@@ -50,7 +50,7 @@ function App() {
   }, [counter]);
 
   useEffect(() => {
-    console.log("다 바뀔 때만 나온다. ");
+    console.log("둘 중에 하나만 바뀌어도 나온다");
   }, [keyword, counter]);
 
   return (
