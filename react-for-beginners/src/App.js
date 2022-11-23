@@ -1,43 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+/* coin tracker 만들기 */
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
 
-  const onChange = (event) => setToDo(event.target.value);
-  const onSubmit = (event) => {
-    event.preventDefault();
-    // toDo가 빈칸이면 submit이 되지 않게하고, 빈칸이 아니면 submit 후
-    // input 칸 비워지게 하기
-    if (toDo === "") {
-      return;
-    }
-    // 주의! 객체인 경우는 이렇게!!! 기존값을 포함한 새 객체를 만들어 리턴해야함.
-    /* setToDos((currentArray) => {
-      const newArray = [toDo, ...currentArray];
-      return newArray;
-      }); */
-    setToDos((currentArray) => [...currentArray, toDo]);
-    setToDo("");
-  };
+  useEffect(() => {
+    // response 받음 (json파일)
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        // coins를 json으로 바꾸고, json을 받아왔다면 로딩상태를 false로 바꾸어 로딩메세지 없애기
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div>
-      <h1>내 할 일 ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          value={toDo}
-          onChange={onChange}
-          type="text"
-          placeholder="작성해주세요."
-        />
-        <button>To do 추가하기</button>
-        <hr />
-        <ul>
-          {toDos.map((toDo, index) => (
-            <li key={index}>{toDo}</li>
-          ))}
-        </ul>
-      </form>
+      <h1>The Coins! ({coins.length})</h1>
+      {loading ? <strong>로딩중 ...</strong> : null}
+      <ul>
+        {coins.map((coin) => (
+          <li key={coin.id}>
+            {coin.name} ({coin.symbol}): ${coin.quotes.USD.price} USD
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
