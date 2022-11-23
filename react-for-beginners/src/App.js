@@ -17,7 +17,7 @@ function App() {
       const newArray = [toDo, ...currentArray];
       return newArray;
       }); */
-    setToDos((currentArray) => [toDo, ...currentArray]);
+    setToDos((currentArray) => [...currentArray, toDo]);
     setToDo("");
   };
   return (
@@ -31,6 +31,12 @@ function App() {
           placeholder="작성해주세요."
         />
         <button>To do 추가하기</button>
+        <hr />
+        <ul>
+          {toDos.map((toDo, index) => (
+            <li key={index}>{toDo}</li>
+          ))}
+        </ul>
       </form>
     </div>
   );
