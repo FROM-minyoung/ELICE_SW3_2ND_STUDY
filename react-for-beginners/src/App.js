@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [loading, setLoading] = useState(true);
   const [coins, setCoins] = useState([]);
+  // coins의 기본값을 useState() 이렇게 두면 undefined가 되기 때문에 에러가 남
 
   useEffect(() => {
     // response 받음 (json파일)
