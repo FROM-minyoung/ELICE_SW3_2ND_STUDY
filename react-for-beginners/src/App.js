@@ -1,33 +1,72 @@
 import { useEffect, useState } from "react";
 
-/* coin tracker 만들기 */
+/* movie app 만들기 */
 function App() {
   const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
-  // coins의 기본값을 useState() 이렇게 두면 undefined가 되기 때문에 에러가 남
+  const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    // response 받음 (json파일)
-    fetch("https://api.coinpaprika.com/v1/tickers")
+  /*
+  fetch then,catch 쓸 때
+useEffect(() => {
+    fetch(
+      "https://yts.mx/api/v2/list_movies.json?minimum_rating=9.0&sort_by=year"
+    )
       .then((response) => response.json())
       .then((json) => {
-        // coins를 json으로 바꾸고, json을 받아왔다면 로딩상태를 false로 바꾸어 로딩메세지 없애기
-        setCoins(json);
+        setMovies(json.data.movies);
         setLoading(false);
       });
+  }, []);
+*/
+
+  /*
+  async await 쓸 때
+  const getMovies = async () => {
+    const response = await fetch(
+      "https://yts.mx/api/v2/list_movies.json?minimum_rating=9.0&sort_by=year"
+    );
+
+    const json = await response.json();
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
+
+*/
+
+  // 그걸 더 간결하게 쓸 때
+  const getMovies = async () => {
+    const json = await (
+      await fetch(
+        "https://yts.mx/api/v2/list_movies.json?minimum_rating=9.0&sort_by=year"
+      )
+    ).json();
+
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getMovies();
   }, []);
 
   return (
     <div>
-      <h1>The Coins! ({coins.length})</h1>
-      {loading ? <strong>로딩중 ...</strong> : null}
-      <ul>
-        {coins.map((coin) => (
-          <li key={coin.id}>
-            {coin.name} ({coin.symbol}): ${coin.quotes.USD.price} USD
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        movies.map((movie) => (
+          <div key={movie.id}>
+            <img src={movie.medium_cover_image} />
+            <h2>{movie.title}</h2>
+            <p>{movie.summary}</p>
+            <ul>
+              {movie.genres.map((g) => (
+                <li key={g}>{g}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      )}
     </div>
   );
 }
