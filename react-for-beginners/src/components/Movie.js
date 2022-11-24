@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+// summary 의 maximum length 만들기
 const Movie = ({ id, coverImg, title, summary, genres }) => {
   return (
     <div>
@@ -8,7 +9,7 @@ const Movie = ({ id, coverImg, title, summary, genres }) => {
       <h2>
         <Link to={`${process.env.PUBLIC_URL}/movie/${id}`}>{title}</Link>
       </h2>
-      <p>{summary}</p>
+      <p>{summary.length > 235 ? `${summary.slice(0, 235)}...` : summary}</p>
       <ul>
         {genres.map((g) => (
           <li key={g}>{g}</li>
