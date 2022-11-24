@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/ELICE_SW3_2ND_STUDY.git/static/js/main.33fb26c7.js",
-    "index.html": "/ELICE_SW3_2ND_STUDY.git/index.html",
-    "main.33fb26c7.js.map": "/ELICE_SW3_2ND_STUDY.git/static/js/main.33fb26c7.js.map"
+    "main.js": "/ELICE_SW3_2ND_STUDY/static/js/main.4264b7cb.js",
+    "index.html": "/ELICE_SW3_2ND_STUDY/index.html",
+    "main.4264b7cb.js.map": "/ELICE_SW3_2ND_STUDY/static/js/main.4264b7cb.js.map"
   },
   "entrypoints": [
-    "static/js/main.33fb26c7.js"
+    "static/js/main.4264b7cb.js"
   ]
 }
