@@ -1,0 +1,16 @@
+a {
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.movie {
+  padding: 20px;
+}
+
+.movie_img {
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+.movie_img:hover {
+  transform: scale(1.1);
+}
