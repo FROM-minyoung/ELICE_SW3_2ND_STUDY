@@ -55,7 +55,9 @@ useEffect(() => {
     <div className="main">
       <Header />
       {loading ? (
-        <h1>Loading...</h1>
+        <div className="loading">
+          <div className="lds-dual-ring"></div>
+        </div>
       ) : (
         <div className="home">
           {movies.map((movie) => (

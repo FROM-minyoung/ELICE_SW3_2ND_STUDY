@@ -1,12 +1,11 @@
 import "./Header.css";
+import "animate.css";
 
 const Header = () => {
   return (
-    <div>
-      <div className="page__title">
-        MOVIE <br />
-        COLLECTION
-      </div>
+    <div className="page__title animate__animated animate__fadeInUp">
+      MOVIE <br />
+      COLLECTION
     </div>
   );
 };
