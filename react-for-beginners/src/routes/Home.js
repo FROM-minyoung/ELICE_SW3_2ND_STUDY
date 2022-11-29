@@ -52,7 +52,7 @@ useEffect(() => {
   }, []);
 
   return (
-    <div>
+    <div className="main">
       <Header />
       {loading ? (
         <h1>Loading...</h1>
