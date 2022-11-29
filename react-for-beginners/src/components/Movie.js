@@ -15,7 +15,9 @@ const Movie = ({ id, coverImg, title, summary, genres }) => {
       </p>
       <ul className="movie_genres">
         {genres.map((g) => (
-          <li key={g}>{g}</li>
+          <li className="movie_genre" key={g}>
+            {g}
+          </li>
         ))}
       </ul>
     </div>

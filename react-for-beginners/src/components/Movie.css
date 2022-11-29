@@ -14,3 +14,20 @@ a {
 .movie_img:hover {
   transform: scale(1.1);
 }
+
+.movie_genres {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  list-style: none;
+}
+
+.movie_genre {
+  width: auto;
+  padding: 6px 7px;
+  border-radius: 6px;
+  background: rgb(233, 233, 233);
+}
