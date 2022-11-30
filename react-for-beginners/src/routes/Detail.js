@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Movie from "./../components/Movie";
+import "./Detail.css";
 
 const Detail = () => {
   // Parameter 값 가져오는 라우터-돔에서 제공해주는 useParams 함수!
@@ -21,13 +21,39 @@ const Detail = () => {
   useEffect(() => {
     getMovie();
   }, []);
-
+  console.log(movieDetail);
   return (
     <div>
-      <h1>Detail</h1>
-      <h2>{movieDetail.title_long}</h2>
-      <img src={`${movieDetail.large_cover_image}`} />
-      <p>{movieDetail.description_full}</p>
+      <div
+        className="detail__img"
+        style={{
+          backgroundImage: `linear-gradient(
+            to right,
+            rgb(255, 255, 255, 1) 10%,
+            rgb(255, 255, 255, 0.75) 25%,
+            rgb(255, 255, 255, 0.5) 50%,
+            rgb(255, 255, 255, 0.25) 75%,
+            rgb(255, 255, 255, 0) 100%
+          ), 
+          url(${movieDetail.background_image})`,
+        }}
+      >
+        <div className="detail__title">DETAIL</div>
+      </div>
+      <div className="movie_header">
+        <h2>{movieDetail.title_long}</h2>
+      </div>
+      <div className="movie_contents">
+        <img
+          className="movie_contents_img"
+          src={`${movieDetail.large_cover_image}`}
+        />
+        <div>
+          <span>Rating </span>
+          <span>{movieDetail.rating}/10</span>
+          <p>{movieDetail.description_full}</p>
+        </div>
+      </div>
     </div>
   );
 };
