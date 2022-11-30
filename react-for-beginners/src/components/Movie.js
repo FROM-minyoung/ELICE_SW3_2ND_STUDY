@@ -9,8 +9,13 @@ const Movie = ({ id, coverImg, title, summary, genres }) => {
       <div className="movie_img_div">
         <img className="movie_img" src={coverImg} alt={title} />
       </div>
-      <h2 className="movie_title">
-        <Link to={`${process.env.PUBLIC_URL}/movie/${id}`}>{title}</Link>
+      <h2>
+        <Link
+          className="movie_title"
+          to={`${process.env.PUBLIC_URL}/movie/${id}`}
+        >
+          {title}
+        </Link>
       </h2>
       <ul className="movie_genres">
         {genres.map((g) => (
